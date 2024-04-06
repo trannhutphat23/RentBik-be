@@ -1,6 +1,7 @@
 package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.GplxDto;
+import com.RentBikApp.RentBik.DTO.GplxResponseDto;
 import com.RentBikApp.RentBik.Model.Gplx;
 import com.RentBikApp.RentBik.Repository.GplxRepository;
 import com.RentBikApp.RentBik.Service.GplxService;
@@ -19,10 +20,11 @@ public class GplxController {
         this.gplxRepository = gplxRepository;
     }
     @PostMapping("/addGplx")
-    public Gplx addGplx(
-        @RequestBody GplxDto gplxDto
+    public GplxResponseDto addGplx(
+        @RequestBody GplxDto dto
     ){
-        var gplx = toGplx(gplxDto);
+        var gplx = toGplx(dto);
+
         return gplxService.saveGplx(gplx);
     }
 
@@ -32,8 +34,9 @@ public class GplxController {
 
         return gplx;
     }
+
     @GetMapping("/gplxs")
     public List<Gplx> findAllGplx(){
-        return gplxService.findAllGpl();
+        return gplxService.findAllGplx();
     }
 }

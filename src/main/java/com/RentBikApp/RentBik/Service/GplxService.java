@@ -1,6 +1,6 @@
 package com.RentBikApp.RentBik.Service;
 
-import com.RentBikApp.RentBik.Controller.GplxController;
+import com.RentBikApp.RentBik.DTO.GplxResponseDto;
 import com.RentBikApp.RentBik.Model.Gplx;
 import com.RentBikApp.RentBik.Repository.GplxRepository;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,16 @@ public class GplxService {
         this.gplxRepository = gplxRepository;
     }
 
-    public Gplx saveGplx(Gplx gplx){
-        return gplxRepository.save(gplx);
+    public GplxResponseDto saveGplx(Gplx gplx){
+        gplxRepository.save(gplx);
+        return toGplxResponseDto(gplx);
     }
-
-    public List<Gplx> findAllGpl(){
+    private GplxResponseDto toGplxResponseDto(Gplx gplx){
+        return new GplxResponseDto(
+                gplx.getRank()
+        );
+    }
+    public List<Gplx> findAllGplx(){
         return gplxRepository.findAll();
     }
 }

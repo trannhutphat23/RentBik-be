@@ -1,9 +1,6 @@
 package com.RentBikApp.RentBik.Model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "gplx")
@@ -35,8 +32,8 @@ public class Gplx {
         this.id = id;
     }
 
-    public String getRank(String rank) {
-        return this.rank;
+    public String getRank() {
+        return rank;
     }
 
     public void setRank(String rank) {
