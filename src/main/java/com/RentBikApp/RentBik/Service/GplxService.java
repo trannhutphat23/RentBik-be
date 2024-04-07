@@ -28,4 +28,14 @@ public class GplxService {
     public List<Gplx> findAllGplx(){
         return gplxRepository.findAll();
     }
+
+    public Gplx findGplxById(Integer id){
+        return gplxRepository.findById(id)
+                .orElse(null);
+    }
+
+    public List<Gplx> findGplxByRank(String rank){
+        return gplxRepository.findAllByRankContaining(rank);
+    }
+
 }

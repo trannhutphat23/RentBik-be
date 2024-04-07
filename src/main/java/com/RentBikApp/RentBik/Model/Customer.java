@@ -1,12 +1,12 @@
 package com.RentBikApp.RentBik.Model;
 
+import com.RentBikApp.RentBik.DTO.GplxDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -21,14 +21,16 @@ public class Customer {
     private String birthday;
     @Column(unique = true)
     private String phoneNumber;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "customer_gplx",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "gplx_id")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
-    @JsonBackReference
-    private List<Gplx> gplxs = new ArrayList<>();
+    @JoinTable(
+        name = "customer_gplx",
+        joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "gplx_id", referencedColumnName = "id")
+    )
+    @JsonIgnore
+    private Set<Gplx> gplxs = new HashSet<Gplx>();
     private String note;
     public Customer() {
     }
@@ -40,6 +42,9 @@ public class Customer {
         this.birthday = birthday;
         this.phoneNumber = phoneNumber;
         this.note = note;
+    }
+    public void addGplx(Gplx gplx){
+        this.gplxs.add(gplx);
     }
 
     public Integer getId() {
@@ -88,5 +93,12 @@ public class Customer {
 
     public void setNote(String note) {
         this.note = note;
+    }
+    public Set<Gplx> getGplxs() {
+        return gplxs;
+    }
+
+    public void setGplxs(Set<Gplx> gplxs) {
+        this.gplxs = gplxs;
     }
 }

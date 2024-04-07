@@ -27,12 +27,25 @@ public class GplxController {
     private Gplx toGplx(GplxDto dto){
         var gplx = new Gplx();
         gplx.setRank(dto.rank());
-
         return gplx;
     }
 
     @GetMapping("/gplxs")
     public List<Gplx> findAllGplx(){
         return gplxService.findAllGplx();
+    }
+
+    @GetMapping("/gplx/{gplx_id}")
+    public Gplx findGplxById(
+            @PathVariable("gplx_id") Integer id
+    ){
+        return gplxService.findGplxById(id);
+    }
+
+    @GetMapping("/gplx/search/{gplx_rank}")
+    public List<Gplx> findGplxByRank(
+            @PathVariable("gplx_rank") String rank
+    ){
+        return gplxService.findGplxByRank(rank);
     }
 }

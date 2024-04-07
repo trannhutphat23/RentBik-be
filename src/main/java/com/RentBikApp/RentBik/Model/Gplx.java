@@ -1,11 +1,10 @@
 package com.RentBikApp.RentBik.Model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "gplx")
@@ -16,12 +15,10 @@ public class Gplx {
     @Column(unique = true)
     private String rank;
     @ManyToMany(
-            mappedBy = "gplxs",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            mappedBy = "gplxs"
     )
     @JsonManagedReference
-    private List<Customer> customer = new ArrayList<>();
+    private Set<Customer> customer = new HashSet<Customer>();
     public Gplx() {
     }
 
@@ -44,5 +41,12 @@ public class Gplx {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+    public Set<Customer> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Set<Customer> customer) {
+        this.customer = customer;
     }
 }
