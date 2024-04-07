@@ -58,4 +58,8 @@ public class CustomerService {
           customer.getNote()
         );
     }
+
+    public void deleteCustomer(Integer id){
+        customerRepository.deleteById(id);
+    }
 }

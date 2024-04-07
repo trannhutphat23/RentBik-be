@@ -22,7 +22,7 @@ public class Customer {
     @Column(unique = true)
     private String phoneNumber;
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
         name = "customer_gplx",

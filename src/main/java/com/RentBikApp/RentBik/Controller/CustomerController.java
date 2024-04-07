@@ -6,6 +6,7 @@ import com.RentBikApp.RentBik.DTO.GplxDto;
 import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Model.Gplx;
 import com.RentBikApp.RentBik.Service.CustomerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,5 +30,12 @@ public class CustomerController {
     ){
         var customer = customerService.toCustomer(dto);
         return customerService.saveCustomer(customer, dto.gplxIds());
+    }
+    @DeleteMapping("/customers/{customer_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCustomer(
+            @PathVariable("customer_id") Integer id
+    ){
+        customerService.deleteCustomer(id);
     }
 }
