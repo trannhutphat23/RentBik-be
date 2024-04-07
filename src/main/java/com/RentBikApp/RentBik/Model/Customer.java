@@ -1,8 +1,11 @@
 package com.RentBikApp.RentBik.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,14 +21,14 @@ public class Customer {
     private String birthday;
     @Column(unique = true)
     private String phoneNumber;
-//    @ManyToMany
-//    @JoinTable(
-//            name = "customer_gplx",
-//            joinColumns = @JoinColumn(name = "customer_id"),
-//            inverseJoinColumns = @JoinColumn(name = "gplx_id")
-//    )
-//    @JsonManagedReference
-//    private List<Gplx> gplxs;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "customer_gplx",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "gplx_id")
+    )
+    @JsonBackReference
+    private List<Gplx> gplxs = new ArrayList<>();
     private String note;
     public Customer() {
     }

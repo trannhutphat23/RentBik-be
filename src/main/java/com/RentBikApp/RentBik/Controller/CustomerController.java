@@ -20,6 +20,8 @@ public class CustomerController {
     public Customer addUser(
             @RequestBody Customer customer
     ){
-        return customerService.saveCustomer(customer);
+        System.out.println(customer);
+        return customer;
+//        return customerService.saveCustomer(customer);
     }
 }

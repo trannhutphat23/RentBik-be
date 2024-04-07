@@ -21,7 +21,8 @@ public class GplxService {
     }
     private GplxResponseDto toGplxResponseDto(Gplx gplx){
         return new GplxResponseDto(
-                gplx.getRank()
+            gplx.getId(),
+            gplx.getRank()
         );
     }
     public List<Gplx> findAllGplx(){
