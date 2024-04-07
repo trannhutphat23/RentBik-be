@@ -1,6 +1,7 @@
 package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.CustomerDto;
+import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
 import com.RentBikApp.RentBik.DTO.GplxDto;
 import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Model.Gplx;
@@ -20,10 +21,6 @@ public class CustomerService {
         this.customerRepository = customerRepository;
         this.gplxRepository = gplxRepository;
     }
-
-//    public Customer saveCustomer(Customer customer){
-//        return customerRepository.save(customer);
-//    }
     public Customer saveCustomer(Customer customer, Set<Integer> gplxIds){
         Set<Gplx> gplxs = gplxRepository.findAllById(gplxIds).stream().collect(Collectors.toSet());
         customer.setGplxs(gplxs);
@@ -35,6 +32,7 @@ public class CustomerService {
         customer.setFullname(dto.fullname());
         customer.setBirthday(dto.birthday());
         customer.setPhoneNumber(dto.phoneNumber());
+        customer.setNote(dto.note());
         return customer;
     }
     private Gplx toGplx(GplxDto dto){
@@ -42,7 +40,22 @@ public class CustomerService {
         gplx.setRank(dto.rank());
         return gplx;
     }
-    public List<Customer> findAllCustomer(){
-        return customerRepository.findAll();
+    public List<CustomerResponseDto> findAllCustomer(){
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream()
+                .map(this::toCustomerResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    private CustomerResponseDto toCustomerResponseDto(Customer customer){
+        return new CustomerResponseDto(
+          customer.getId(),
+          customer.getCccd(),
+          customer.getFullname(),
+          customer.getBirthday(),
+          customer.getPhoneNumber(),
+          customer.getGplxs(),
+          customer.getNote()
+        );
     }
 }

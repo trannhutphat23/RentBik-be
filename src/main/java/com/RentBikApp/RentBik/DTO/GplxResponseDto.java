@@ -4,4 +4,5 @@ public record GplxResponseDto(
         Integer id,
         String rank
 ) {
+
 }
