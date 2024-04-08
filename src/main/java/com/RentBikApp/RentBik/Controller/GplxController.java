@@ -19,17 +19,9 @@ public class GplxController {
     @PostMapping("/addGplx")
     public GplxResponseDto addGplx(
         @RequestBody GplxDto dto
-    ){
-        var gplx = toGplx(dto);
-        return gplxService.saveGplx(gplx);
+    ) {
+        return gplxService.saveGplx(dto);
     }
-
-    private Gplx toGplx(GplxDto dto){
-        var gplx = new Gplx();
-        gplx.setRank(dto.rank());
-        return gplx;
-    }
-
     @GetMapping("/gplxs")
     public List<Gplx> findAllGplx(){
         return gplxService.findAllGplx();

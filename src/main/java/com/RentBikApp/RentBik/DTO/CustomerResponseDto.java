@@ -10,7 +10,7 @@ public record CustomerResponseDto(
         String fullname,
         String birthday,
         String phoneNumber,
-        Set<Gplx> gplxes,
+        Set<GplxResponseDto> gplxes,
         String note
 ) {
 }

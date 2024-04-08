@@ -28,8 +28,7 @@ public class CustomerController {
     public Customer addUser(
             @RequestBody CustomerDto dto
     ){
-        var customer = customerService.toCustomer(dto);
-        return customerService.saveCustomer(customer, dto.gplxIds());
+        return customerService.saveCustomer(dto, dto.gplxIds());
     }
     @DeleteMapping("/customers/{customer_id}")
     @ResponseStatus(HttpStatus.OK)

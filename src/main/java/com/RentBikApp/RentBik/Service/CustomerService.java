@@ -2,13 +2,14 @@ package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.CustomerDto;
 import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
-import com.RentBikApp.RentBik.DTO.GplxDto;
+import com.RentBikApp.RentBik.DTO.GplxResponseDto;
 import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Model.Gplx;
 import com.RentBikApp.RentBik.Repository.CustomerRepository;
 import com.RentBikApp.RentBik.Repository.GplxRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,8 +22,9 @@ public class CustomerService {
         this.customerRepository = customerRepository;
         this.gplxRepository = gplxRepository;
     }
-    public Customer saveCustomer(Customer customer, Set<Integer> gplxIds){
-        Set<Gplx> gplxs = gplxRepository.findAllById(gplxIds).stream().collect(Collectors.toSet());
+    public Customer saveCustomer(CustomerDto dto, Set<Integer> gplxIds){
+        var customer = toCustomer(dto);
+        Set<Gplx> gplxs = new HashSet<>(gplxRepository.findAllById(gplxIds));
         customer.setGplxs(gplxs);
         return customerRepository.save(customer);
     }
@@ -35,11 +37,6 @@ public class CustomerService {
         customer.setNote(dto.note());
         return customer;
     }
-    private Gplx toGplx(GplxDto dto){
-        var gplx = new Gplx();
-        gplx.setRank(dto.rank());
-        return gplx;
-    }
     public List<CustomerResponseDto> findAllCustomer(){
         List<Customer> customers = customerRepository.findAll();
         return customers.stream()
@@ -48,13 +45,17 @@ public class CustomerService {
     }
 
     private CustomerResponseDto toCustomerResponseDto(Customer customer){
+        Set<GplxResponseDto> gplxes = customer.getGplxs().stream()
+                .map(gplx -> new GplxResponseDto(gplx.getId(), gplx.getRank()))
+                .collect(Collectors.toSet());
+
         return new CustomerResponseDto(
           customer.getId(),
           customer.getCccd(),
           customer.getFullname(),
           customer.getBirthday(),
           customer.getPhoneNumber(),
-          customer.getGplxs(),
+          gplxes,
           customer.getNote()
         );
     }
