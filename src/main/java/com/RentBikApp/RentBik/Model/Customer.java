@@ -3,9 +3,11 @@ package com.RentBikApp.RentBik.Model;
 import com.RentBikApp.RentBik.DTO.GplxDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,11 +28,17 @@ public class Customer {
     )
     @JoinTable(
         name = "customer_gplx",
-        joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "gplx_id", referencedColumnName = "id")
+        joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id",
+                foreignKey = @ForeignKey(name = "fk_customer_id")),
+        inverseJoinColumns = @JoinColumn(name = "gplx_id", referencedColumnName = "id",
+                foreignKey = @ForeignKey(name = "fk_gplx_id"))
     )
     @JsonIgnore
     private Set<Gplx> gplxs = new HashSet<Gplx>();
+
+    @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
+    private List<Rent> rents;
     private String note;
     public Customer() {
     }
@@ -100,5 +108,13 @@ public class Customer {
 
     public void setGplxs(Set<Gplx> gplxs) {
         this.gplxs = gplxs;
+    }
+
+    public List<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(List<Rent> rents) {
+        this.rents = rents;
     }
 }

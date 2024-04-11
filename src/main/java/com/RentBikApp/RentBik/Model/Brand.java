@@ -12,6 +12,9 @@ public class Brand {
     @Column(unique = true)
     private String name;
 
+    @OneToOne(mappedBy = "brand")
+    private Car car;
+
     public Brand() {
     }
 
@@ -34,5 +37,12 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

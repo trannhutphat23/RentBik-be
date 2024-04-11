@@ -3,20 +3,20 @@ package com.RentBikApp.RentBik.Model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Series")
-public class Series {
+@Table(name = "Type")
+public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(unique = true)
     private String name;
 
-    @OneToOne(mappedBy = "series")
+    @OneToOne(mappedBy = "type")
     private Car car;
-
-    public Series() {
+    public Type() {
     }
-
-    public Series(Integer id, String name) {
+    public Type(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -36,6 +36,7 @@ public class Series {
     public void setName(String name) {
         this.name = name;
     }
+
     public Car getCar() {
         return car;
     }
