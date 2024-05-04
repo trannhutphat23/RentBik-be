@@ -1,14 +1,13 @@
 package com.RentBikApp.RentBik.Controller;
 
+import com.RentBikApp.RentBik.DTO.InsuranceDto;
 import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Service.InsuranceService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class InsuranceController {
@@ -18,10 +17,10 @@ public class InsuranceController {
         this.insuranceService = insuranceService;
     }
 
-    @PostMapping("/addInsurance")
-    public Insurance addInsurance(
-            @RequestBody Insurance insurance
+    @PostMapping("/insurances/add")
+    public Object addInsurance(
+            @RequestBody InsuranceDto dto
     ){
-        return insuranceService.addInsurance(insurance);
+        return insuranceService.addInsurance(dto);
     }
 }

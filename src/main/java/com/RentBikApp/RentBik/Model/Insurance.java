@@ -14,7 +14,6 @@ public class Insurance {
 
     @Column(unique = true)
     private String mabh;
-
     private LocalDate purchaseDate;
     private LocalDate expiredDate;
     private Float purchasePrice;

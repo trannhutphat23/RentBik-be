@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InsuranceRepository extends JpaRepository<Insurance, Integer> {
+    boolean existsByMabh(String mabh);
 }
