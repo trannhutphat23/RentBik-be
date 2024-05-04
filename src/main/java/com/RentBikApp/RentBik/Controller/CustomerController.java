@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class CustomerController {
@@ -24,8 +25,8 @@ public class CustomerController {
         return customerService.findAllCustomer();
     }
 
-    @PostMapping("/addCustomer")
-    public Customer addUser(
+    @PostMapping("/customers/add")
+    public Object addUser(
             @RequestBody CustomerDto dto
     ){
         return customerService.saveCustomer(dto, dto.gplxIds());

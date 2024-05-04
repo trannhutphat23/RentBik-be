@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class GplxController {
@@ -16,7 +17,7 @@ public class GplxController {
     public GplxController(GplxService gplxService) {
         this.gplxService = gplxService;
     }
-    @PostMapping("/addGplx")
+    @PostMapping("/gplxs/add")
     public GplxResponseDto addGplx(
         @RequestBody GplxDto dto
     ) {
