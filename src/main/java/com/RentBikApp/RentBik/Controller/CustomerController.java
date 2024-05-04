@@ -25,6 +25,13 @@ public class CustomerController {
         return customerService.findAllCustomer();
     }
 
+    @GetMapping("customers/{customer_cccd}")
+    public Customer findCustomerByCccd(
+            @PathVariable("customer_cccd") String cccd
+    ){
+        return customerService.findCustomerByCccd(cccd);
+    }
+
     @PostMapping("/customers/add")
     public Object addUser(
             @RequestBody CustomerDto dto
