@@ -32,6 +32,13 @@ public class CustomerController {
         return customerService.findCustomerByCccd(cccd);
     }
 
+    @GetMapping("customers/search")
+    public List<CustomerResponseDto> searchCustomers(
+            @RequestParam String keyword
+    ){
+        return customerService.searchCustomers(keyword);
+    }
+
     @PostMapping("/customers/add")
     public Object addUser(
             @RequestBody CustomerDto dto

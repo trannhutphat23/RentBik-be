@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class InsuranceService {
@@ -26,6 +27,10 @@ public class InsuranceService {
         }
 
         return insuranceRepository.save(insurance);
+    }
+
+    public List<Insurance> findAllInsurance(){
+        return insuranceRepository.findAll();
     }
 
     public Insurance toInsurance(InsuranceDto dto){

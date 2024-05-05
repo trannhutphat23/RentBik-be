@@ -6,6 +6,7 @@ import com.RentBikApp.RentBik.Service.InsuranceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -22,5 +23,10 @@ public class InsuranceController {
             @RequestBody InsuranceDto dto
     ){
         return insuranceService.addInsurance(dto);
+    }
+
+    @GetMapping("insurances")
+    public List<Insurance> findAllInsurance(){
+        return insuranceService.findAllInsurance();
     }
 }

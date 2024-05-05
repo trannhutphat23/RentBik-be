@@ -6,6 +6,7 @@ import com.RentBikApp.RentBik.Service.SeriesService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class SeriesController {

@@ -38,7 +38,16 @@ public class CustomerService {
         customer.setGplxs(gplxs);
         return customerRepository.save(customer);
     }
-    public Customer toCustomer(CustomerDto dto){
+
+    public List<CustomerResponseDto> searchCustomers(String keyword){
+        System.out.println(keyword);
+        List<Customer> customers = customerRepository.findByKeywordContainingIgnoreCase(keyword);
+        return customers.stream()
+                .map(this::toCustomerResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    private Customer toCustomer(CustomerDto dto){
         var customer = new Customer();
         customer.setCccd(dto.cccd());
         customer.setFullname(dto.fullname());
