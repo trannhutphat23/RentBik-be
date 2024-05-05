@@ -1,5 +1,6 @@
 package com.RentBikApp.RentBik.Controller;
 
+import com.RentBikApp.RentBik.DTO.SeriesDto;
 import com.RentBikApp.RentBik.Model.Brand;
 import com.RentBikApp.RentBik.Model.Series;
 import com.RentBikApp.RentBik.Service.SeriesService;
@@ -21,10 +22,10 @@ public class SeriesController {
         return seriesService.findAllBrands();
     }
 
-    @PostMapping("/addSeries")
-    public Series addSeries(
-            @RequestBody Series series
+    @PostMapping("/series/add")
+    public Object addSeries(
+            @RequestBody SeriesDto dto
     ){
-        return seriesService.addSeries(series);
+        return seriesService.addSeries(dto);
     }
 }

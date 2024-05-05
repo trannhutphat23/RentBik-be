@@ -1,6 +1,10 @@
 package com.RentBikApp.RentBik.Service;
 
+import com.RentBikApp.RentBik.DTO.InsuranceDto;
+import com.RentBikApp.RentBik.DTO.SeriesDto;
 import com.RentBikApp.RentBik.Model.Brand;
+import com.RentBikApp.RentBik.Model.ErrorResponse;
+import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Model.Series;
 import com.RentBikApp.RentBik.Repository.SeriesRepository;
 import org.springframework.stereotype.Service;
@@ -16,7 +20,19 @@ public class SeriesService {
     public List<Series> findAllBrands(){
         return seriesRepository.findAll();
     }
-    public Series addSeries(Series series){
+    public Object addSeries(SeriesDto dto){
+        var series = toInsurance(dto);
+
+        if (seriesRepository.existsByName(series.getName())){
+            return new ErrorResponse("Name must be unique");
+        }
+
         return seriesRepository.save(series);
+    }
+
+    public Series toInsurance(SeriesDto dto){
+        var series = new Series();
+        series.setName(dto.name());
+        return series;
     }
 }

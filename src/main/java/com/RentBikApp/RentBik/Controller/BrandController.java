@@ -1,5 +1,6 @@
 package com.RentBikApp.RentBik.Controller;
 
+import com.RentBikApp.RentBik.DTO.BrandDto;
 import com.RentBikApp.RentBik.Model.Brand;
 import com.RentBikApp.RentBik.Service.BrandService;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,11 @@ public class BrandController {
         return brandService.findAllBrands();
     }
 
-    @PostMapping("/addBrand")
-    public Brand addBrand(
-            @RequestBody Brand brand
+    @PostMapping("/brands/add")
+    public Object addBrand(
+            @RequestBody BrandDto dto
     ){
-        return brandService.addBrand(brand);
+        return brandService.addBrand(dto);
     }
 
     @GetMapping("/brand/search/{brand_name}")
