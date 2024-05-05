@@ -1,10 +1,8 @@
 package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.BrandDto;
-import com.RentBikApp.RentBik.DTO.GplxDto;
 import com.RentBikApp.RentBik.Model.Brand;
 import com.RentBikApp.RentBik.Model.ErrorResponse;
-import com.RentBikApp.RentBik.Model.Gplx;
 import com.RentBikApp.RentBik.Repository.BrandRepository;
 import org.springframework.stereotype.Service;
 

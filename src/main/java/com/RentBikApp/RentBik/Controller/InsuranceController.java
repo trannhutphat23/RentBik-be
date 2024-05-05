@@ -5,7 +5,6 @@ import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Service.InsuranceService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -24,9 +23,14 @@ public class InsuranceController {
     ){
         return insuranceService.addInsurance(dto);
     }
-
-    @GetMapping("insurances")
+    @GetMapping("/insurances")
     public List<Insurance> findAllInsurance(){
         return insuranceService.findAllInsurance();
+    }
+    @GetMapping("/insurances/{insurance_id}")
+    public Insurance findInsuranceById(
+            @PathVariable("insurance_id") Integer id
+    ){
+        return insuranceService.findInsuranceById(id);
     }
 }

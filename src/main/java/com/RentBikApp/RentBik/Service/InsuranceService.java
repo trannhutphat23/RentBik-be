@@ -6,8 +6,6 @@ import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Repository.InsuranceRepository;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,12 +31,17 @@ public class InsuranceService {
         return insuranceRepository.findAll();
     }
 
-    public Insurance toInsurance(InsuranceDto dto){
+    private Insurance toInsurance(InsuranceDto dto){
         var insurance = new Insurance();
         insurance.setMabh(dto.mabh());
         insurance.setPurchaseDate(dto.purchaseDate());
         insurance.setExpiredDate(dto.expiredDate());
         insurance.setPurchasePrice(dto.purchasePrice());
         return insurance;
+    }
+
+    public Insurance findInsuranceById(Integer id){
+        return insuranceRepository.findById(id)
+                .orElse(null);
     }
 }

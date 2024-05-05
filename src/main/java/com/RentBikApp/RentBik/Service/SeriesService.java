@@ -1,10 +1,7 @@
 package com.RentBikApp.RentBik.Service;
 
-import com.RentBikApp.RentBik.DTO.InsuranceDto;
 import com.RentBikApp.RentBik.DTO.SeriesDto;
-import com.RentBikApp.RentBik.Model.Brand;
 import com.RentBikApp.RentBik.Model.ErrorResponse;
-import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Model.Series;
 import com.RentBikApp.RentBik.Repository.SeriesRepository;
 import org.springframework.stereotype.Service;

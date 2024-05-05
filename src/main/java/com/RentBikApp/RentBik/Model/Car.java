@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.RentBikApp.RentBik.EnumData.Status;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -47,11 +48,11 @@ public class Car {
     @OneToMany(mappedBy = "car")
     @JsonManagedReference
     private List<Maintenance> maintenances;
-
     @OneToMany(mappedBy = "car")
     @JsonManagedReference
     private List<Rent> rents;
-
+    private Float purchasePrice;
+    private LocalDate purchaseDate;
     private Float hirePrice;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -150,5 +151,21 @@ public class Car {
 
     public void setRents(List<Rent> rents) {
         this.rents = rents;
+    }
+
+    public Float getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(Float purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 }

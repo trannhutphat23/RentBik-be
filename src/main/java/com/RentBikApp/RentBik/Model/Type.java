@@ -8,10 +8,8 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column(unique = true)
     private String name;
-
     @OneToOne(mappedBy = "type")
     private Car car;
     public Type() {
