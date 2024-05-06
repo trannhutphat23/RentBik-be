@@ -77,6 +77,14 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
+    public List<CarResponseDto> searchCars(String keyword){
+        List<Car> cars = carRepository.findByKeywordContainingIgnoreCase(keyword);
+
+        return cars.stream()
+                .map(this::toCarResponseDto)
+                .collect(Collectors.toList());
+    }
+
     private CarResponseDto toCarResponseDto(Car car){
         return new CarResponseDto(
                 car.getId(),
@@ -88,7 +96,8 @@ public class CarService {
                 car.getPurchasePrice(),
                 car.getHirePrice(),
                 car.getPurchaseDate(),
-                car.getCarNote()
+                car.getCarNote(),
+                car.getStatus()
         );
     }
 }

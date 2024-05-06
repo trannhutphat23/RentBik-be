@@ -29,4 +29,11 @@ public class CarController {
     public List<CarResponseDto> findAllCar(){
         return carService.findAllCar();
     }
+
+    @GetMapping("/cars/search")
+    public List<CarResponseDto> searchCars(
+            @RequestParam String keyword
+    ){
+        return carService.searchCars(keyword);
+    }
 }

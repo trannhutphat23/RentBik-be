@@ -18,6 +18,7 @@ public record CarResponseDto(
         Float purchasePrice,
         Float hirePrice,
         LocalDate purchaseDate,
-        String carNote
+        String carNote,
+        String status
 ) {
 }
