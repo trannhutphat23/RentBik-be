@@ -1,9 +1,12 @@
 package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.CarDto;
+import com.RentBikApp.RentBik.DTO.CarResponseDto;
 import com.RentBikApp.RentBik.Model.Car;
 import com.RentBikApp.RentBik.Service.CarService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -15,10 +18,15 @@ public class CarController {
         this.carService = carService;
     }
 
-    @PostMapping("/car/add")
-    public Car addCar(
+    @PostMapping("/cars/add")
+    public Object addCar(
             @RequestBody CarDto dto
     ){
         return carService.addCar(dto);
+    }
+
+    @GetMapping("/cars")
+    public List<CarResponseDto> findAllCar(){
+        return carService.findAllCar();
     }
 }

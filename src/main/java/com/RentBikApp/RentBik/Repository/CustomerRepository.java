@@ -14,7 +14,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     boolean existsByCccd(String cccd);
     boolean existsByPhoneNumber(String phoneNumber);
     Customer findAllByCccdContaining(String cccd);
-
     @Query(nativeQuery = true,
         value = "SELECT * FROM public.customer t WHERE t.cccd LIKE %:keyword% " +
                                                 "OR t.fullname LIKE %:keyword% " +

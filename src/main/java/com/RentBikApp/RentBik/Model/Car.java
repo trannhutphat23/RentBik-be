@@ -1,6 +1,7 @@
 package com.RentBikApp.RentBik.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.RentBikApp.RentBik.EnumData.Status;
@@ -15,7 +16,6 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
     private String licensePlate;
 
     @OneToOne(
@@ -23,6 +23,7 @@ public class Car {
     )
     @JoinColumn(name = "brand_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_brand_car"))
+    @JsonIgnore
     private Brand brand;
 
     @OneToOne(
@@ -30,6 +31,7 @@ public class Car {
     )
     @JoinColumn(name = "series_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_series_car"))
+    @JsonIgnore
     private Series series;
 
     @OneToOne(
@@ -37,12 +39,14 @@ public class Car {
     )
     @JoinColumn(name = "type_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_type_car"))
+    @JsonIgnore
     private Type type;
     @OneToOne(
             cascade = CascadeType.ALL
     )
     @JoinColumn(name = "insurance_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_insurance_car"))
+    @JsonIgnore
     private Insurance insurance;
 
     @OneToMany(mappedBy = "car")
@@ -54,8 +58,7 @@ public class Car {
     private Float purchasePrice;
     private LocalDate purchaseDate;
     private Float hirePrice;
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status = "có sẵn";
     private String carNote;
 
     public Car() {
@@ -121,11 +124,11 @@ public class Car {
         this.hirePrice = hirePrice;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

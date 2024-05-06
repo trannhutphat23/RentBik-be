@@ -34,7 +34,6 @@ public class Customer {
     )
     @JsonIgnore
     private Set<Gplx> gplxs = new HashSet<Gplx>();
-
     @OneToMany(mappedBy = "customer")
     @JsonManagedReference
     private List<Rent> rents;
