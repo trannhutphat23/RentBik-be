@@ -18,27 +18,45 @@ public class Car {
 
     private String licensePlate;
 
-    @OneToOne(
-            cascade = CascadeType.ALL
+//    @OneToOne(
+//            cascade = CascadeType.ALL
+//    )
+//    @JoinColumn(name = "brand_id", referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "fk_brand_car"))
+//    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(
+            name = "brand_id",
+            foreignKey = @ForeignKey(name = "fk_brand_car")
     )
-    @JoinColumn(name = "brand_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_brand_car"))
     @JsonIgnore
     private Brand brand;
 
-    @OneToOne(
-            cascade = CascadeType.ALL
+//    @OneToOne(
+//            cascade = CascadeType.ALL
+//    )
+//    @JoinColumn(name = "series_id", referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "fk_series_car"))
+//    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(
+            name = "series_id",
+            foreignKey = @ForeignKey(name = "fk_series_car")
     )
-    @JoinColumn(name = "series_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_series_car"))
     @JsonIgnore
     private Series series;
 
-    @OneToOne(
-            cascade = CascadeType.ALL
+//    @OneToOne(
+//            cascade = CascadeType.ALL
+//    )
+//    @JoinColumn(name = "type_id", referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "fk_type_car"))
+//    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(
+            name = "type_id",
+            foreignKey = @ForeignKey(name = "fk_type_car")
     )
-    @JoinColumn(name = "type_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_type_car"))
     @JsonIgnore
     private Type type;
     @OneToOne(

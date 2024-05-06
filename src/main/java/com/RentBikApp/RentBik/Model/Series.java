@@ -1,7 +1,10 @@
 package com.RentBikApp.RentBik.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Series")
@@ -11,8 +14,9 @@ public class Series {
     private Integer id;
     private String name;
 
-    @OneToOne(mappedBy = "series")
-    private Car car;
+    @OneToMany(mappedBy = "series")
+    @JsonManagedReference
+    private List<Car> cars;
 
     public Series() {
     }
@@ -37,11 +41,12 @@ public class Series {
     public void setName(String name) {
         this.name = name;
     }
-    public Car getCar() {
-        return car;
+
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 }

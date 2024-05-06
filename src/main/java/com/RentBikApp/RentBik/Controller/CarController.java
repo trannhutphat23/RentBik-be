@@ -22,7 +22,7 @@ public class CarController {
     public Object addCar(
             @RequestBody CarDto dto
     ){
-        return carService.addCar(dto);
+        return carService.addCar(dto, dto.brandId(), dto.typeId(), dto.seriesId(), dto.insuranceId());
     }
 
     @GetMapping("/cars")

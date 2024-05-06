@@ -29,20 +29,35 @@ public class CarService {
         this.insuranceRepository = insuranceRepository;
     }
 
-    public Object addCar(CarDto dto){
+    public Object addCar(CarDto dto, Integer brandId, Integer typeId, Integer seriesId, Integer insuranceId){
+        var car = toCar(dto);
+
         // check license plate
         if (carRepository.existsByLicensePlate(dto.licensePlate())){
             return new ErrorResponse("License plate must be unique");
         }
 
-        Integer maxIdx = carRepository.findMaxIndex();
-        if (maxIdx == null) {
-            maxIdx = 0;
+        Optional<Type> optionalType = typeRepository.findById(typeId);
+        Optional<Brand> optionalBrand = brandRepository.findById(brandId);
+        Optional<Series> optionalSeries = seriesRepository.findById(seriesId);
+        if (insuranceId != null){
+            Optional<Insurance> optionalInsurance = insuranceRepository.findById(insuranceId);
+            if (optionalInsurance.isPresent()){
+                Insurance insurance = optionalInsurance.get();
+                car.setInsurance(insurance);
+            }
         }
 
-        carRepository.saveCar(dto.brandId(), maxIdx, dto.insuranceId(), dto.purchaseDate(), dto.purchasePrice(), dto.seriesId(), dto.typeId(), dto.carNote(), dto.licensePlate());
+        if (optionalType.isPresent() && optionalBrand.isPresent() && optionalSeries.isPresent()){
+            Type type = optionalType.get();
+            Brand brand = optionalBrand.get();
+            Series series = optionalSeries.get();
 
-        return new SuccessResponse("Add Successfully");
+            car.setType(type);
+            car.setBrand(brand);
+            car.setSeries(series);
+        }
+        return carRepository.save(car);
     }
 
     private Car toCar(CarDto dto){
