@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
     boolean existsByLicensePlate(String licensePlate);
-
     @Query(nativeQuery = true,
             value = "SELECT t1.*, t3.name, t2.name " +
                     "FROM public.car t1 " +

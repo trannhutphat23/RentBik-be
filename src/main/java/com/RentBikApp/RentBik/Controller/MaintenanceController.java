@@ -1,10 +1,7 @@
 package com.RentBikApp.RentBik.Controller;
 
-import com.RentBikApp.RentBik.DTO.CarResponseDto;
-import com.RentBikApp.RentBik.DTO.InsuranceDto;
-import com.RentBikApp.RentBik.DTO.MaintenanceDto;
-import com.RentBikApp.RentBik.DTO.MaintenanceResponseDto;
-import com.RentBikApp.RentBik.Model.Maintenance;
+import com.RentBikApp.RentBik.DTO.*;
+import com.RentBikApp.RentBik.Model.PaymentMaintenance;
 import com.RentBikApp.RentBik.Service.MaintenanceService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +27,19 @@ public class MaintenanceController {
     @GetMapping("/maintenances")
     public List<MaintenanceResponseDto> findAllMaintenance(){
         return maintenanceService.findAllMaintenance();
+    }
+
+    @GetMapping("/maintenances/search")
+    public List<MaintenanceResponseDto> searchMaintenances(
+            @RequestParam String keyword
+    ){
+        return maintenanceService.searchMaintenances(keyword);
+    }
+
+    @PostMapping("/maintenances/pay")
+    public Object payMaintenance(
+        @RequestBody PaymentMaintenanceDto dto
+    ){
+        return maintenanceService.payMaintenance(dto, dto.maintenanceId());
     }
 }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public record MaintenanceDto(
     Integer carId,
     LocalDate maintenanceDate,
-    String maintenanceNote
+    String maintenanceNote,
+    Float price
 ) {
 }

@@ -1,9 +1,11 @@
 package com.RentBikApp.RentBik.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Maintenance")
@@ -21,6 +23,12 @@ public class Maintenance {
     private Car car;
     private LocalDate maintenanceDate;
     private String maintenanceNote;
+    private Float price;
+    private String status = "Chua thanh toan";
+
+    @OneToMany(mappedBy = "maintenance")
+    @JsonManagedReference
+    private List<PaymentMaintenance> paymentMaintenances;
 
     public Maintenance() {
     }
@@ -62,5 +70,21 @@ public class Maintenance {
 
     public void setMaintenanceNote(String maintenanceNote) {
         this.maintenanceNote = maintenanceNote;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

@@ -8,6 +8,8 @@ public record MaintenanceResponseDto(
         Integer id,
         Car car,
         LocalDate maintenanceDate,
-        String maintenanceNote
+        String maintenanceNote,
+        String status,
+        Float price
 ) {
 }
