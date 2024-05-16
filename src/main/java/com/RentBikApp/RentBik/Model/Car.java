@@ -76,7 +76,7 @@ public class Car {
     private Float purchasePrice;
     private LocalDate purchaseDate;
     private Float hirePrice;
-    private String status = "có sẵn";
+    private String status = "Co san";
     private String carNote;
 
     public Car() {

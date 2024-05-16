@@ -63,8 +63,13 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public Customer findCustomerByCccd(String cccd){
-        return customerRepository.findAllByCccdContaining(cccd);
+    public Object findCustomerByCccd(String cccd){
+        // check cccd doesn't exist
+        if (!customerRepository.existsByCccd(cccd)) {
+            return new ErrorResponse("CCCD doesn't exist");
+        }
+
+        return toCustomerResponseDto(customerRepository.findAllByCccdContaining(cccd));
     }
 
     private CustomerResponseDto toCustomerResponseDto(Customer customer){

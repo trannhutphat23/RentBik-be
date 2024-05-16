@@ -24,7 +24,7 @@ public class CustomerController {
     }
 
     @GetMapping("customers/{customer_cccd}")
-    public Customer findCustomerByCccd(
+    public Object findCustomerByCccd(
             @PathVariable("customer_cccd") String cccd
     ){
         return customerService.findCustomerByCccd(cccd);

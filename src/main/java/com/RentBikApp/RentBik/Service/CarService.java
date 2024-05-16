@@ -57,6 +57,9 @@ public class CarService {
             car.setBrand(brand);
             car.setSeries(series);
         }
+
+        car.setHirePrice(dto.purchasePrice()*10/100);
+
         return carRepository.save(car);
     }
 

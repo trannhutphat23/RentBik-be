@@ -65,6 +65,22 @@ public class MaintenanceService {
         Optional<Maintenance> optionalMaintenance = maintenanceRepository.findById(maintenanceId);
         if (optionalMaintenance.isPresent()){
             Maintenance maintenance = optionalMaintenance.get();
+
+            // check input price is bigger exist price
+            if (dto.price() > maintenance.getPrice()){
+                return new ErrorResponse("Payment price should not bigger than maintenance price");
+            }
+
+            // tru tien thanh toan
+            maintenance.setPrice(maintenance.getPrice() - dto.price());
+
+            // check price = 0
+            if (maintenance.getPrice() == 0){
+                maintenance.setStatus("Da thanh toan");
+            }
+
+            maintenanceRepository.save(maintenance);
+
             paymentMaintenance.setMaintenance(maintenance);
         }
 
