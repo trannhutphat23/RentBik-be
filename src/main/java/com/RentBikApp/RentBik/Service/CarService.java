@@ -88,6 +88,28 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
+    public List<CarResponseDto> findCarNoInsurance(){
+        List<Car> cars = carRepository.findCarHaveInsuranceNull();
+
+        return cars.stream()
+                .map(this::toCarResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    public Object addInsuranceForCar(Integer carId, Integer insuranceId){
+
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        Optional<Insurance> optionalInsurance = insuranceRepository.findById(insuranceId);
+
+        if (optionalCar.isEmpty() || optionalInsurance.isEmpty()){
+            return new ErrorResponse("Car or insuracne not found");
+        }
+
+        carRepository.addNewInsurance(carId, insuranceId);
+
+        return new SuccessResponse("Add insurance successfully");
+    }
+
     private CarResponseDto toCarResponseDto(Car car){
         return new CarResponseDto(
                 car.getId(),

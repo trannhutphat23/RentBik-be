@@ -2,6 +2,7 @@ package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.CarDto;
 import com.RentBikApp.RentBik.DTO.CarResponseDto;
+import com.RentBikApp.RentBik.DTO.InsuranceCarDto;
 import com.RentBikApp.RentBik.Model.Car;
 import com.RentBikApp.RentBik.Service.CarService;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,17 @@ public class CarController {
             @RequestParam String keyword
     ){
         return carService.searchCars(keyword);
+    }
+
+    @GetMapping("/cars/insuranceNotFound")
+    public List<CarResponseDto> findCarNoInsurance(){
+        return carService.findCarNoInsurance();
+    }
+
+    @PostMapping("/cars/add_insurance")
+    public Object addInsurance(
+            @RequestBody InsuranceCarDto dto
+    ){
+        return carService.addInsuranceForCar(dto.carId(), dto.insuranceId());
     }
 }
