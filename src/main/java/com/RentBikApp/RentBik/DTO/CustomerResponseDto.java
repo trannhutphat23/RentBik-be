@@ -1,7 +1,8 @@
 package com.RentBikApp.RentBik.DTO;
 
-import com.RentBikApp.RentBik.Model.Gplx;
+import com.RentBikApp.RentBik.Model.Rent;
 
+import java.util.List;
 import java.util.Set;
 
 public record CustomerResponseDto(
@@ -11,6 +12,7 @@ public record CustomerResponseDto(
         String birthday,
         String phoneNumber,
         Set<GplxResponseDto> gplxes,
+        List<RentResponseDto> rents,
         String note
 ) {
 }

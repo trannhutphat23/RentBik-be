@@ -1,8 +1,5 @@
 package com.RentBikApp.RentBik.Repository;
 
-import com.RentBikApp.RentBik.DTO.CustomerDto;
-import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
-import com.RentBikApp.RentBik.Model.Gplx;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.RentBikApp.RentBik.Model.Customer;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +15,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             value = "SELECT t1.*, t3.rank " +
                     "FROM public.customer t1 " +
                     "INNER JOIN public.customer_gplx t2 ON t1.id = t2.customer_id " +
-                    "INNER JOIN public.gplx t3 ON t2.gplx_id = t3.id"
+                    "INNER JOIN public.gplx t3 ON t2.gplx_id = t3.id " +
+                    "WHERE (t1.cccd ILIKE %:cccd%)"
     )
     Customer findAllByCccdContaining(String cccd);
     @Query(nativeQuery = true,

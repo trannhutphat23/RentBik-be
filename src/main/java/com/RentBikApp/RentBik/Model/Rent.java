@@ -25,6 +25,7 @@ public class Rent {
             name = "customer_id",
             foreignKey = @ForeignKey(name = "fk_rent_customer")
     )
+    @JsonBackReference
     private Customer customer;
     private LocalDate rentalDate;
     private LocalDate expiryDate;

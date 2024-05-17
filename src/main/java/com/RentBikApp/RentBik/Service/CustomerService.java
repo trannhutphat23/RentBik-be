@@ -1,8 +1,7 @@
 package com.RentBikApp.RentBik.Service;
 
-import com.RentBikApp.RentBik.DTO.CustomerDto;
-import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
-import com.RentBikApp.RentBik.DTO.GplxResponseDto;
+import com.RentBikApp.RentBik.DTO.*;
+import com.RentBikApp.RentBik.Model.Car;
 import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Model.ErrorResponse;
 import com.RentBikApp.RentBik.Model.Gplx;
@@ -77,6 +76,18 @@ public class CustomerService {
                 .map(gplx -> new GplxResponseDto(gplx.getId(), gplx.getRank()))
                 .collect(Collectors.toSet());
 
+        List<RentResponseDto> rents = customer.getRents().stream()
+                .map(rent -> new RentResponseDto(
+                        rent.getId(),
+                        toCarResponseDto(rent.getCar()),
+                        rent.getCustomer(),
+                        rent.getRentalDate(),
+                        rent.getExpiryDate(),
+                        rent.getRentalNote(),
+                        rent.getRentStatus(),
+                        rent.getReturnCard()))
+                .collect(Collectors.toList());
+
         return new CustomerResponseDto(
           customer.getId(),
           customer.getCccd(),
@@ -84,7 +95,24 @@ public class CustomerService {
           customer.getBirthday(),
           customer.getPhoneNumber(),
           gplxes,
+          rents,
           customer.getNote()
+        );
+    }
+
+    private CarResponseDto toCarResponseDto(Car car){
+        return new CarResponseDto(
+                car.getId(),
+                car.getLicensePlate(),
+                car.getType(),
+                car.getBrand(),
+                car.getSeries(),
+                car.getInsurance(),
+                car.getPurchasePrice(),
+                car.getHirePrice(),
+                car.getPurchaseDate(),
+                car.getCarNote(),
+                car.getStatus()
         );
     }
 

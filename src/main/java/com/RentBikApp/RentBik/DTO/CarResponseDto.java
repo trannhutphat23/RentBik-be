@@ -1,6 +1,5 @@
 package com.RentBikApp.RentBik.DTO;
 
-import com.RentBikApp.RentBik.EnumData.Status;
 import com.RentBikApp.RentBik.Model.Brand;
 import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Model.Series;
