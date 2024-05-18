@@ -38,9 +38,21 @@ public class CarController {
         return carService.searchCars(keyword);
     }
 
+    @GetMapping("/cars/searchAvailable")
+    public List<CarResponseDto> searchCarsAvailable(
+            @RequestParam String keyword
+    ){
+        return carService.searchCarsAvailable(keyword);
+    }
+
     @GetMapping("/cars/insuranceNotFound")
     public List<CarResponseDto> findCarNoInsurance(){
         return carService.findCarNoInsurance();
+    }
+
+    @GetMapping("/cars/available")
+    public List<CarResponseDto> findCarAvailable(){
+        return carService.findCarAvailable();
     }
 
     @PostMapping("/cars/add_insurance")
