@@ -46,4 +46,10 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "SET insurance_id = %:insuranceId% " +
                     "WHERE id = %:carId% ")
     void addNewInsurance(Integer carId, Integer insuranceId);
+
+    @Query(nativeQuery = true,
+          value = "SELECT * " +
+                  "FROM public.CAR " +
+                  "WHERE license_plate = %:bsx%")
+    Car findByBsx(String bsx);
 }

@@ -26,4 +26,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
                                                 "OR t.phone_number LIKE %:keyword%"
     )
     List<Customer> findByKeywordContainingIgnoreCase(String keyword);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * " +
+                    "FROM public.CUSTOMER " +
+                    "WHERE cccd = %:cccd% ")
+    Customer findByCCCD(String cccd);
 }

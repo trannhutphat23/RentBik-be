@@ -2,7 +2,6 @@ package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.RentDto;
 import com.RentBikApp.RentBik.DTO.RentResponseDto;
-import com.RentBikApp.RentBik.Model.Rent;
 import com.RentBikApp.RentBik.Service.RentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +27,13 @@ public class RentController {
     @GetMapping("/rents")
     public List<RentResponseDto> findAllRent(){
         return rentService.findAllRent();
+    }
+
+    @GetMapping("/rents/get_detail_info")
+    public Object findRentDetailInfo(
+        @RequestParam String bsx,
+        @RequestParam String cccd
+    ){
+        return rentService.findRentDetailInfo(bsx, cccd);
     }
 }

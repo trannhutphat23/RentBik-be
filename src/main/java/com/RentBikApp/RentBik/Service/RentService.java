@@ -56,6 +56,28 @@ public class RentService {
                 .collect(Collectors.toList());
     }
 
+    public Object findRentDetailInfo(String bsx, String cccd){
+        // check car exist
+        Car car = carRepository.findByBsx(bsx);
+        if (car==null){
+            return new ErrorResponse("Car doesn't exist");
+        }
+
+        // check customer exist
+        Customer customer = customerRepository.findByCCCD(cccd);
+        if (customer==null){
+            return new ErrorResponse("Customer doesn't exist");
+        }
+
+        // check rent by cccd and bsx
+        Rent rent = rentRepository.findRentInfoDetail(bsx, cccd);
+        if (rent==null){
+            return new ErrorResponse("Car hasn't already hired for this customer");
+        }
+
+        return toRentResponseDto(rentRepository.findRentInfoDetail(bsx, cccd));
+    }
+
     private Rent toRent(RentDto dto){
         var rent = new Rent();
 
