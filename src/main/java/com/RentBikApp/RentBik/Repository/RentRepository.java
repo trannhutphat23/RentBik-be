@@ -14,7 +14,7 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
     // get expire date by customer_id and car_id
     @Query(nativeQuery = true,
             value = "SELECT expiry_date FROM public.RENT " +
-                    "WHERE customer_id = %:customerId% AND car_id = %:carId%")
+                    "WHERE customer_id = %:customerId% AND car_id = %:carId% AND rent_status = 'Dang thue'")
     LocalDate getExpiryDate(Integer customerId, Integer carId);
 
     // get info rent by bsx and cccd
@@ -23,6 +23,6 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
                     "FROM public.RENT t1 " +
                     "INNER JOIN public.CUSTOMER t2 ON t1.customer_id = t2.id " +
                     "INNER JOIN public.CAR t3 ON t1.car_id = t3.id " +
-                    "WHERE cccd = %:cccd% AND t3.license_plate = %:bsx% AND t3.status = 'Khong co san'")
+                    "WHERE cccd = %:cccd% AND t3.license_plate = %:bsx% AND t3.status = 'Khong co san' AND t1.rent_status = 'Dang thue'")
     Rent findRentInfoDetail(String bsx, String cccd);
 }

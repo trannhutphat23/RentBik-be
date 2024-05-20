@@ -16,7 +16,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
                     "FROM public.customer t1 " +
                     "INNER JOIN public.customer_gplx t2 ON t1.id = t2.customer_id " +
                     "INNER JOIN public.gplx t3 ON t2.gplx_id = t3.id " +
-                    "WHERE (t1.cccd ILIKE %:cccd%)"
+                    "WHERE (t1.cccd ILIKE %:cccd%)" +
+                    "LIMIT 1"
     )
     Customer findAllByCccdContaining(String cccd);
     @Query(nativeQuery = true,

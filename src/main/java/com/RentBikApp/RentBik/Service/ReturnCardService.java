@@ -1,8 +1,8 @@
 package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.HireInfoResponseDto;
-import com.RentBikApp.RentBik.Model.Car;
-import com.RentBikApp.RentBik.Model.ErrorResponse;
+import com.RentBikApp.RentBik.DTO.ReturnCardDto;
+import com.RentBikApp.RentBik.Model.*;
 import com.RentBikApp.RentBik.Repository.CarRepository;
 import com.RentBikApp.RentBik.Repository.RentRepository;
 import com.RentBikApp.RentBik.Repository.ReturnCardRepository;
@@ -45,5 +45,32 @@ public class ReturnCardService {
         }else {
             return new ErrorResponse("No exist customer or car");
         }
+    }
+
+    public Object addReturnCard(ReturnCardDto dto, Integer rentId){
+        var returnCard = toReturnCard(dto);
+
+        Optional<Rent> optionalRent = rentRepository.findById(rentId);
+        if (optionalRent.isEmpty()){
+            return new ErrorResponse("This rent doesn't exist");
+        }
+
+        Rent rent = optionalRent.get();
+        returnCard.setRent(rent);
+        rent.setRentStatus("Da thanh toan");
+
+        Car car = rent.getCar();
+        car.setStatus("Co san");
+
+        return returnCardRepository.save(returnCard);
+    }
+
+    private ReturnCard toReturnCard(ReturnCardDto dto){
+        var returnCard = new ReturnCard();
+        returnCard.setFine(dto.finePrice());
+        returnCard.setTotal(dto.total());
+        returnCard.setReturnedDate(dto.returnDate());
+        returnCard.setReturnNote(dto.returnNote());
+        return returnCard;
     }
 }

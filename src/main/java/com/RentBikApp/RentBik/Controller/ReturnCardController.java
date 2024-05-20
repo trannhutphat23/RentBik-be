@@ -1,7 +1,7 @@
 package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.HireInfoDto;
-import com.RentBikApp.RentBik.DTO.HireInfoResponseDto;
+import com.RentBikApp.RentBik.DTO.ReturnCardDto;
 import com.RentBikApp.RentBik.Service.ReturnCardService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,22 @@ public class ReturnCardController {
         this.returnCardService = returnCardService;
     }
 
-    @GetMapping("/return_cards/hire_info_price")
+    @PostMapping("/return_cards/hire_info_price")
     public Object getHireInfoPrice(
             @RequestBody HireInfoDto dto
     ){
         return returnCardService.getHireInfoPrice(dto.customerId(), dto.carId(), dto.returnDate());
+    }
+
+    @PostMapping("/return_cards/add")
+    public Object addReturnCard(
+            @RequestBody ReturnCardDto dto
+    ){
+        return returnCardService.addReturnCard(dto, dto.rentId());
+    }
+
+    @GetMapping("/return_cards")
+    public Object getReturnCards(){
+        return 1;
     }
 }

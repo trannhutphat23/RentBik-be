@@ -1,5 +1,6 @@
 package com.RentBikApp.RentBik.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,19 +17,23 @@ public class ReturnCard {
     )
     @JoinColumn(name = "rent_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "fk_rent_car"))
+    @JsonBackReference
     private Rent rent;
 
     private LocalDate returnedDate;
     private Float fine;
+    private Float total;
+    private String returnNote;
 
-    public ReturnCard() {
-    }
+    public ReturnCard(){}
 
-    public ReturnCard(Integer id, Rent rent, LocalDate returnedDate, Float fine) {
+    public ReturnCard(Integer id, Rent rent, LocalDate returnedDate, Float fine, Float total, String returnNote) {
         this.id = id;
         this.rent = rent;
         this.returnedDate = returnedDate;
         this.fine = fine;
+        this.total = total;
+        this.returnNote = returnNote;
     }
 
     public Integer getId() {
@@ -61,5 +66,21 @@ public class ReturnCard {
 
     public void setFine(Float fine) {
         this.fine = fine;
+    }
+
+    public String getReturnNote() {
+        return returnNote;
+    }
+
+    public void setReturnNote(String returnNote) {
+        this.returnNote = returnNote;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
     }
 }

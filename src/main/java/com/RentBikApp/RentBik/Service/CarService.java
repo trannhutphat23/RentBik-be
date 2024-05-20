@@ -73,7 +73,7 @@ public class CarService {
     }
 
     public List<CarResponseDto> findAllCar(){
-        List<Car> cars = carRepository.findAll();
+        List<Car> cars = carRepository.findAllByOrderByIdAsc();
 
         return cars.stream()
                 .map(this::toCarResponseDto)

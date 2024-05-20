@@ -56,6 +56,10 @@ public class RentService {
                 .collect(Collectors.toList());
     }
 
+    public Object findHiringCarByCustomerId(Integer customerId){
+        return customerId;
+    }
+
     public Object findRentDetailInfo(String bsx, String cccd){
         // check car exist
         Car car = carRepository.findByBsx(bsx);

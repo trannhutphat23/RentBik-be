@@ -1,6 +1,7 @@
 package com.RentBikApp.RentBik.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class Rent {
     private String rentalNote;
     private String rentStatus;
     @OneToOne(mappedBy = "rent")
+    @JsonManagedReference
     private ReturnCard returnCard;
 
     public Rent() {

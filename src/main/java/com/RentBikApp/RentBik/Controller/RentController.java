@@ -29,6 +29,13 @@ public class RentController {
         return rentService.findAllRent();
     }
 
+    @GetMapping("/rents/getHiringCar/{customer_id}")
+    public Object findHiringCarByCustomerId(
+            @PathVariable("customer_id") Integer customer_id
+    ){
+        return rentService.findHiringCarByCustomerId(customer_id);
+    }
+
     @GetMapping("/rents/get_detail_info")
     public Object findRentDetailInfo(
         @RequestParam String bsx,

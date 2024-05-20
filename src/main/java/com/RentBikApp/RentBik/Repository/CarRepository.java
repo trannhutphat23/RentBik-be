@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
+    List<Car> findAllByOrderByIdAsc();
     boolean existsByLicensePlate(String licensePlate);
     @Query(nativeQuery = true,
             value = "SELECT t1.*, t3.name, t2.name " +
