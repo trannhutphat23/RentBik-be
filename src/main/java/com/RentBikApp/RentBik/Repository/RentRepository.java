@@ -1,6 +1,5 @@
 package com.RentBikApp.RentBik.Repository;
 
-import com.RentBikApp.RentBik.DTO.RentResponseDto;
 import com.RentBikApp.RentBik.Model.Rent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

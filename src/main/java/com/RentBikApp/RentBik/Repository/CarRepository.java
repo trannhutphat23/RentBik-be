@@ -1,5 +1,6 @@
 package com.RentBikApp.RentBik.Repository;
 
+import com.RentBikApp.RentBik.DTO.ReportCarDto;
 import com.RentBikApp.RentBik.Model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -53,4 +54,24 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                   "FROM public.CAR " +
                   "WHERE license_plate = %:bsx%")
     Car findByBsx(String bsx);
+
+    @Query(nativeQuery = true,
+            value = "SELECT t1.id, t1.license_plate, t4.mabh, t3.name as type_car, t2.name as series_car, t5.rent_count, t6.return_count, t6.tong " +
+                    "FROM public.CAR t1 " +
+                    "INNER JOIN public.SERIES t2 ON t1.series_id = t2.id " +
+                    "INNER JOIN public.TYPE t3 ON t1.type_id = t3.id " +
+                    "LEFT JOIN public.INSURANCE t4 ON t1.insurance_id = t4.id " +
+                    "LEFT JOIN (SELECT car_id, COUNT(*) AS rent_count FROM public.RENT GROUP BY car_id) t5 ON t1.id = t5.car_id " +
+                    "LEFT JOIN ( " +
+                    "SELECT car_id, COUNT(rent_id) AS return_count, SUM(tong_tien) AS tong " +
+                    "FROM ( " +
+                    "SELECT car_id, rent_id, COUNT(*) AS rent_count, COALESCE(SUM(total), 0) AS tong_tien " +
+                    "FROM public.RENT " +
+                    "LEFT JOIN return_card ON rent.id = return_card.rent_id " +
+                    "GROUP BY car_id, rent_id " +
+                    ") AS subquery " +
+                    "GROUP BY car_id " +
+                    ") t6 ON t1.id = t6.car_id"
+    )
+    List<Object[]> getReportCar();
 }
