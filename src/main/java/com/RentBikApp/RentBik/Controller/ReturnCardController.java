@@ -2,8 +2,11 @@ package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.HireInfoDto;
 import com.RentBikApp.RentBik.DTO.ReturnCardDto;
+import com.RentBikApp.RentBik.DTO.ReturnCardResponseDto;
 import com.RentBikApp.RentBik.Service.ReturnCardService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -30,7 +33,7 @@ public class ReturnCardController {
     }
 
     @GetMapping("/return_cards")
-    public Object getReturnCards(){
-        return 1;
+    public List<ReturnCardResponseDto> getReturnCards(){
+        return returnCardService.getReturnCards();
     }
 }

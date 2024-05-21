@@ -2,6 +2,7 @@ package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.HireInfoResponseDto;
 import com.RentBikApp.RentBik.DTO.ReturnCardDto;
+import com.RentBikApp.RentBik.DTO.ReturnCardResponseDto;
 import com.RentBikApp.RentBik.Model.*;
 import com.RentBikApp.RentBik.Repository.CarRepository;
 import com.RentBikApp.RentBik.Repository.RentRepository;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReturnCardService {
@@ -21,6 +24,14 @@ public class ReturnCardService {
         this.returnCardRepository = returnCardRepository;
         this.rentRepository = rentRepository;
         this.carRepository = carRepository;
+    }
+
+    public List<ReturnCardResponseDto> getReturnCards(){
+        List<ReturnCard> returnCards = returnCardRepository.findAll();
+
+        return returnCards.stream()
+                .map(this::toReturnCardResponseDto)
+                .collect(Collectors.toList());
     }
 
     public Object getHireInfoPrice(Integer customerId, Integer carId, LocalDate returnDate){
@@ -72,5 +83,17 @@ public class ReturnCardService {
         returnCard.setReturnedDate(dto.returnDate());
         returnCard.setReturnNote(dto.returnNote());
         return returnCard;
+    }
+
+    private ReturnCardResponseDto toReturnCardResponseDto(ReturnCard returnCard){
+        return new ReturnCardResponseDto(
+                returnCard.getId(),
+                returnCard.getRent(),
+                returnCard.getRent().getCustomer(),
+                returnCard.getReturnedDate(),
+                returnCard.getFine(),
+                returnCard.getTotal(),
+                returnCard.getReturnNote()
+        );
     }
 }
