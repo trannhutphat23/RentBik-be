@@ -1,5 +1,6 @@
 package com.RentBikApp.RentBik.Controller;
 
+import com.RentBikApp.RentBik.DTO.CccdDto;
 import com.RentBikApp.RentBik.DTO.CustomerDto;
 import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
 import com.RentBikApp.RentBik.Model.Customer;
@@ -37,12 +38,25 @@ public class CustomerController {
         return customerService.searchCustomers(keyword);
     }
 
+    @GetMapping("/customers/cccds")
+    public List<CccdDto> getCccds(){
+        return customerService.getCccds();
+    }
+
     @PostMapping("/customers/add")
     public Object addUser(
             @RequestBody CustomerDto dto
     ){
         return customerService.saveCustomer(dto, dto.gplxIds());
     }
+
+    @PutMapping("/customers/update")
+    public Object updateUser(
+            @RequestBody CustomerDto dto
+    ){
+        return customerService.updateCustomer(dto, dto.gplxIds());
+    }
+
     @DeleteMapping("/customers/{customer_id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteCustomer(

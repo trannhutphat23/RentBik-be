@@ -54,4 +54,17 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
                     "ORDER BY t1.id;"
     )
     List<Object[]> getReportCustomer();
+
+    @Query(nativeQuery = true,
+        value = "SELECT id, cccd FROM CUSTOMER"
+    )
+    List<Object[]> getCccds();
+
+    // get record not equal param cccd
+    @Query(nativeQuery = true,
+        value = "SELECT COUNT(*) " +
+                "FROM CUSTOMER " +
+                "WHERE phone_number = %:phoneNumber% AND cccd != %:cccd%"
+    )
+    Integer getCustomerNotCccd(String phoneNumber, String cccd);
 }

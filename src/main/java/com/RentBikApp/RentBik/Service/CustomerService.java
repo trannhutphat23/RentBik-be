@@ -71,6 +71,17 @@ public class CustomerService {
         return toCustomerResponseDto(customerRepository.findAllByCccdContaining(cccd));
     }
 
+    public List<CccdDto> getCccds(){
+        List<Object[]> cccds = customerRepository.getCccds();
+
+        return cccds.stream()
+                .map(arr -> new CccdDto(
+                    ((Number) arr[0]).intValue(),
+                    (String) arr[1]
+                ))
+                .collect(Collectors.toList());
+    }
+
     private CustomerResponseDto toCustomerResponseDto(Customer customer){
         Set<GplxResponseDto> gplxes = customer.getGplxs().stream()
                 .map(gplx -> new GplxResponseDto(gplx.getId(), gplx.getRank()))
@@ -114,6 +125,29 @@ public class CustomerService {
                 car.getCarNote(),
                 car.getStatus()
         );
+    }
+
+    public Object updateCustomer(CustomerDto dto, Set<Integer> gplxIds){
+        var customer = customerRepository.findByCCCD(dto.cccd());
+
+        if (customer == null) {
+            return new ErrorResponse("Customer not found");
+        }
+
+        int count = customerRepository.getCustomerNotCccd(dto.phoneNumber(), dto.cccd());
+        if (count > 0){
+            return new ErrorResponse("Phone number must be unique");
+        }
+
+        // update
+        customer.setFullname(dto.fullname());
+        customer.setBirthday(dto.birthday());
+        customer.setPhoneNumber(dto.phoneNumber());
+        Set<Gplx> gplxs = new HashSet<>(gplxRepository.findAllById(gplxIds));
+        customer.setGplxs(gplxs);
+        customer.setNote(dto.note());
+        // save
+        return customerRepository.save(customer);
     }
 
     public void deleteCustomer(Integer id){
