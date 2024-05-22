@@ -2,8 +2,8 @@ package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.ReportCarDto;
 import com.RentBikApp.RentBik.DTO.ReportCustomerDto;
-import com.RentBikApp.RentBik.Repository.CarRepository;
-import com.RentBikApp.RentBik.Repository.CustomerRepository;
+import com.RentBikApp.RentBik.DTO.ReportRevenueDto;
+import com.RentBikApp.RentBik.Repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +13,18 @@ import java.util.stream.Collectors;
 public class ReportService {
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
+    private final RentRepository rentRepository;
+    private final ReturnCardRepository returnCardRepository;
+    private final MaintenanceRepository maintenanceRepository;
+    private final InsuranceRepository insuranceRepository;
 
-    public ReportService(CarRepository carRepository, CustomerRepository customerRepository) {
+    public ReportService(CarRepository carRepository, CustomerRepository customerRepository, RentRepository rentRepository, ReturnCardRepository returnCardRepository, MaintenanceRepository maintenanceRepository, InsuranceRepository insuranceRepository) {
         this.carRepository = carRepository;
         this.customerRepository = customerRepository;
+        this.rentRepository = rentRepository;
+        this.returnCardRepository = returnCardRepository;
+        this.maintenanceRepository = maintenanceRepository;
+        this.insuranceRepository = insuranceRepository;
     }
 
     public List<ReportCarDto> getReportCar(){
@@ -50,5 +58,21 @@ public class ReportService {
                         ((Number) arr[6]).floatValue()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public Object getReportRevenue(){
+        Object totalHirePrice = rentRepository.getSumHirePrice();
+        Object totalReturnPrice = returnCardRepository.getSumReturnPrice();
+        Object totalMaintenancePrice = maintenanceRepository.getReportMaintenance();
+        Object totalInsurancePrice = insuranceRepository.getReportInsurance();
+        Float profit = ((Number) totalReturnPrice).floatValue() - ((Number) totalMaintenancePrice).floatValue() - ((Number) totalInsurancePrice).floatValue();
+
+        return new ReportRevenueDto(
+                ((Number) totalHirePrice).floatValue(),
+                ((Number) totalReturnPrice).floatValue(),
+                ((Number) totalMaintenancePrice).floatValue(),
+                ((Number) totalInsurancePrice).floatValue(),
+                profit
+        );
     }
 }

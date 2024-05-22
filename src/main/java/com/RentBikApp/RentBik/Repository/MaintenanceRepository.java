@@ -17,4 +17,11 @@ public interface MaintenanceRepository extends JpaRepository<Maintenance, Intege
                     "INNER JOIN public.car t2 ON t1.car_id = t2.id " +
                     "WHERE (license_plate ILIKE %:keyword% OR maintenance_note ILIKE %:keyword% OR t1.status ILIKE %:keyword%)")
     List<Maintenance> findByKeywordContainingIgnoreCase(String keyword);
+
+    // get report maintenance
+    @Query(nativeQuery = true,
+        value = "SELECT SUM(price) AS tien_bao_tri " +
+                "FROM maintenance"
+    )
+    Object getReportMaintenance();
 }

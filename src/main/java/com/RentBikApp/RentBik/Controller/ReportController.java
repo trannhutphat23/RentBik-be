@@ -29,4 +29,9 @@ public class ReportController {
     public List<ReportCustomerDto> getReportCustomer(){
         return reportService.getReportCustomer();
     }
+
+    @GetMapping("/reports/revenue")
+    public Object getReportRevenue(){
+        return reportService.getReportRevenue();
+    }
 }
