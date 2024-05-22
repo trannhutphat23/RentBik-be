@@ -71,7 +71,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "GROUP BY car_id, rent_id " +
                     ") AS subquery " +
                     "GROUP BY car_id " +
-                    ") t6 ON t1.id = t6.car_id"
+                    ") t6 ON t1.id = t6.car_id " +
+                    "ORDER BY t1.id ASC"
     )
     List<Object[]> getReportCar();
 }

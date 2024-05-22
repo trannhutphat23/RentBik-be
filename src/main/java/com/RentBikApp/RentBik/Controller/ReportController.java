@@ -1,6 +1,7 @@
 package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.ReportCarDto;
+import com.RentBikApp.RentBik.DTO.ReportCustomerDto;
 import com.RentBikApp.RentBik.Service.ReportService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,10 @@ public class ReportController {
     @GetMapping("/reports/cars")
     public List<ReportCarDto> getReportCar(){
         return reportService.getReportCar();
+    }
+
+    @GetMapping("/reports/customers")
+    public List<ReportCustomerDto> getReportCustomer(){
+        return reportService.getReportCustomer();
     }
 }

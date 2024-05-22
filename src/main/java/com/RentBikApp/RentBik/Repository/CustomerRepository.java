@@ -33,4 +33,25 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
                     "FROM public.CUSTOMER " +
                     "WHERE cccd = %:cccd% ")
     Customer findByCCCD(String cccd);
+
+    @Query(nativeQuery = true,
+            value = "SELECT t1.id, t1.fullname, COUNT(DISTINCT t2.id) AS rent_count, COUNT(DISTINCT t3.rent_id) AS return_count, " +
+                    "COUNT(DISTINCT CASE WHEN t2.rent_status = 'Dang thue' THEN t2.id END) AS dang_thue_count, " +
+                    "COUNT(DISTINCT CASE WHEN t2.rent_status = 'Da thanh toan' THEN t2.id END) AS da_thanh_toan_count, " +
+                    "COALESCE(SUM(t3.tong), 0) AS total_sum " +
+                    "FROM public.CUSTOMER t1 " +
+                    "LEFT JOIN public.RENT t2 ON t1.id = t2.customer_id " +
+                    "LEFT JOIN ( " +
+                    "SELECT rent_id, SUM(tong_tien) AS tong " +
+                    "FROM ( " +
+                    "SELECT rent_id, COUNT(*) AS rent_count, COALESCE(SUM(total), 0) AS tong_tien " +
+                    "FROM public.RETURN_CARD " +
+                    "GROUP BY rent_id " +
+                    ") " +
+                    "GROUP BY rent_id " +
+                    ") t3 ON t2.id = t3.rent_id " +
+                    "GROUP BY t1.id, t1.fullname " +
+                    "ORDER BY t1.id;"
+    )
+    List<Object[]> getReportCustomer();
 }
