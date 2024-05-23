@@ -2,15 +2,12 @@ package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.CarDto;
 import com.RentBikApp.RentBik.DTO.CarResponseDto;
-import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
-import com.RentBikApp.RentBik.DTO.GplxResponseDto;
 import com.RentBikApp.RentBik.Model.*;
 import com.RentBikApp.RentBik.Repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

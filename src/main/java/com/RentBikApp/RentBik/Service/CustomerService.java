@@ -1,12 +1,10 @@
 package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.*;
-import com.RentBikApp.RentBik.Model.Car;
-import com.RentBikApp.RentBik.Model.Customer;
-import com.RentBikApp.RentBik.Model.ErrorResponse;
-import com.RentBikApp.RentBik.Model.Gplx;
+import com.RentBikApp.RentBik.Model.*;
 import com.RentBikApp.RentBik.Repository.CustomerRepository;
 import com.RentBikApp.RentBik.Repository.GplxRepository;
+import com.RentBikApp.RentBik.Repository.RentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,9 +14,11 @@ import java.util.stream.Collectors;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final GplxRepository gplxRepository;
-    public CustomerService(CustomerRepository customerRepository, GplxRepository gplxRepository) {
+    private final RentRepository rentRepository;
+    public CustomerService(CustomerRepository customerRepository, GplxRepository gplxRepository, RentRepository rentRepository) {
         this.customerRepository = customerRepository;
         this.gplxRepository = gplxRepository;
+        this.rentRepository = rentRepository;
     }
     public Object saveCustomer(CustomerDto dto, Set<Integer> gplxIds){
         var customer = toCustomer(dto);
@@ -150,7 +150,19 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public void deleteCustomer(Integer id){
+    public Object deleteCustomer(Integer id){
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isEmpty()){
+            return new ErrorResponse("CCCD doesn't exist");
+        }
+
+        int count = rentRepository.getRentHasCustomerId(id);
+        if (count > 0){
+            return new ErrorResponse("This customer is still renting car");
+        }
+
         customerRepository.deleteById(id);
+
+        return new SuccessResponse("Delete successfully");
     }
 }

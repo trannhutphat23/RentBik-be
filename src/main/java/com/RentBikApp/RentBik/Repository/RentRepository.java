@@ -35,4 +35,12 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
                     "GROUP BY car_id " +
                     ")")
     Object getSumHirePrice();
+
+    // get record with equal param customer_id
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(*) " +
+                    "FROM RENT " +
+                    "WHERE customer_id = %:id% AND rent_status = 'Dang thue'"
+    )
+    Integer getRentHasCustomerId(Integer id);
 }

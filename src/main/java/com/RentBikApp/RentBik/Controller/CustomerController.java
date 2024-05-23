@@ -59,9 +59,9 @@ public class CustomerController {
 
     @DeleteMapping("/customers/{customer_id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCustomer(
+    public Object deleteCustomer(
             @PathVariable("customer_id") Integer id
     ){
-        customerService.deleteCustomer(id);
+        return customerService.deleteCustomer(id);
     }
 }
