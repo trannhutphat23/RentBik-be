@@ -3,7 +3,6 @@ package com.RentBikApp.RentBik.Controller;
 import com.RentBikApp.RentBik.DTO.CccdDto;
 import com.RentBikApp.RentBik.DTO.CustomerDto;
 import com.RentBikApp.RentBik.DTO.CustomerResponseDto;
-import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

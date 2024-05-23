@@ -1,7 +1,6 @@
 package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.*;
-import com.RentBikApp.RentBik.Model.PaymentMaintenance;
 import com.RentBikApp.RentBik.Service.MaintenanceService;
 import org.springframework.web.bind.annotation.*;
 

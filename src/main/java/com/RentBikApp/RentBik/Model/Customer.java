@@ -1,12 +1,9 @@
 package com.RentBikApp.RentBik.Model;
 
-import com.RentBikApp.RentBik.DTO.GplxDto;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

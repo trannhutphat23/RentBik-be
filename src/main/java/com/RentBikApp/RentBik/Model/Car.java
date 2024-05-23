@@ -1,10 +1,8 @@
 package com.RentBikApp.RentBik.Model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import com.RentBikApp.RentBik.EnumData.Status;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,12 +16,6 @@ public class Car {
 
     private String licensePlate;
 
-//    @OneToOne(
-//            cascade = CascadeType.ALL
-//    )
-//    @JoinColumn(name = "brand_id", referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "fk_brand_car"))
-//    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "brand_id",
@@ -32,12 +24,6 @@ public class Car {
     @JsonIgnore
     private Brand brand;
 
-//    @OneToOne(
-//            cascade = CascadeType.ALL
-//    )
-//    @JoinColumn(name = "series_id", referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "fk_series_car"))
-//    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "series_id",
@@ -46,12 +32,6 @@ public class Car {
     @JsonIgnore
     private Series series;
 
-//    @OneToOne(
-//            cascade = CascadeType.ALL
-//    )
-//    @JoinColumn(name = "type_id", referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "fk_type_car"))
-//    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "type_id",

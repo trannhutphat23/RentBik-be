@@ -3,7 +3,6 @@ package com.RentBikApp.RentBik.Controller;
 import com.RentBikApp.RentBik.DTO.CarDto;
 import com.RentBikApp.RentBik.DTO.CarResponseDto;
 import com.RentBikApp.RentBik.DTO.InsuranceCarDto;
-import com.RentBikApp.RentBik.Model.Car;
 import com.RentBikApp.RentBik.Service.CarService;
 import org.springframework.web.bind.annotation.*;
 
