@@ -75,4 +75,12 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "ORDER BY t1.id ASC"
     )
     List<Object[]> getReportCar();
+
+    // get record which match the insurance_id
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(*) " +
+                    "FROM CAR " +
+                    "WHERE insurance_id = %:id%"
+    )
+    Integer getCarHasInsuranceId(Integer id);
 }
