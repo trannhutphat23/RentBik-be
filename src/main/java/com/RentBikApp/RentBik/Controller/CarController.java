@@ -7,7 +7,6 @@ import com.RentBikApp.RentBik.DTO.InsuranceCarDto;
 import com.RentBikApp.RentBik.Service.CarService;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.List;
 
 @CrossOrigin
