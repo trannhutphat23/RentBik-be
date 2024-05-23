@@ -33,7 +33,7 @@ public class InsuranceService {
     }
 
     public List<Insurance> findAllInsurance(){
-        return insuranceRepository.findAll();
+        return insuranceRepository.findAllByOrderByIdAsc();
     }
 
     private Insurance toInsurance(InsuranceDto dto){

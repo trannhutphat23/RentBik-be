@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface InsuranceRepository extends JpaRepository<Insurance, Integer> {
+    List<Insurance> findAllByOrderByIdAsc();
     boolean existsByMabh(String mabh);
 
     @Query(nativeQuery = true,

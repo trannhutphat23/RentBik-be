@@ -39,7 +39,6 @@ public class CustomerService {
     }
 
     public List<CustomerResponseDto> searchCustomers(String keyword){
-        System.out.println(keyword);
         List<Customer> customers = customerRepository.findByKeywordContainingIgnoreCase(keyword);
         return customers.stream()
                 .map(this::toCustomerResponseDto)
@@ -56,7 +55,7 @@ public class CustomerService {
         return customer;
     }
     public List<CustomerResponseDto> findAllCustomer(){
-        List<Customer> customers = customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAllByOrderByIdAsc();
         return customers.stream()
                 .map(this::toCustomerResponseDto)
                 .collect(Collectors.toList());

@@ -19,7 +19,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "FROM public.car t1 " +
                     "INNER JOIN public.series t2 ON t1.series_id = t2.id " +
                     "INNER JOIN public.type t3 ON t1.type_id = t3.id " +
-                    "WHERE (license_plate ILIKE %:keyword% OR car_note ILIKE %:keyword% OR status ILIKE %:keyword% OR t2.name ILIKE %:keyword% OR t3.name ILIKE %:keyword%)"
+                    "WHERE (license_plate ILIKE %:keyword% OR car_note ILIKE %:keyword% OR status ILIKE %:keyword% OR t2.name ILIKE %:keyword% OR t3.name ILIKE %:keyword%) " +
+                    "ORDER BY t1.id ASC"
     )
     List<Car> findByKeywordContainingIgnoreCase(String keyword);
 

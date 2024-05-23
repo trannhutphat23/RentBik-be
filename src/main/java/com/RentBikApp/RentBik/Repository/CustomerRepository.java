@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+    List<Customer> findAllByOrderByIdAsc();
     boolean existsByCccd(String cccd);
     boolean existsByPhoneNumber(String phoneNumber);
     @Query(nativeQuery = true,
@@ -21,10 +22,14 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     )
     Customer findAllByCccdContaining(String cccd);
     @Query(nativeQuery = true,
-        value = "SELECT * FROM public.customer t WHERE t.cccd LIKE %:keyword% " +
-                                                "OR t.fullname LIKE %:keyword% " +
-                                                "OR t.note LIKE %:keyword% " +
-                                                "OR t.phone_number LIKE %:keyword%"
+        value = "SELECT t1.*, t3.rank FROM public.customer t1 " +
+                "INNER JOIN customer_gplx t2 ON t1.id = t2.customer_id " +
+                "INNER JOIN gplx t3 ON t2.gplx_id = t3.id " +
+                "WHERE t1.cccd LIKE %:keyword% " +
+                "OR t1.fullname LIKE %:keyword% " +
+                "OR t1.note LIKE %:keyword% " +
+                "OR t1.phone_number LIKE %:keyword% " +
+                "OR t3.rank ILIKE %:keyword%"
     )
     List<Customer> findByKeywordContainingIgnoreCase(String keyword);
 

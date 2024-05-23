@@ -137,7 +137,10 @@ public class CarService {
             return new ErrorResponse("Car or insurance not found");
         }
 
+        Car car = optionalCar.get();
+        car.setHirePrice(car.getPurchasePrice()*15/100);
         carRepository.addNewInsurance(carId, insuranceId);
+
 
         return new SuccessResponse("Add insurance successfully");
     }
