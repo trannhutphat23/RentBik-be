@@ -1,7 +1,6 @@
 package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.InsuranceDto;
-import com.RentBikApp.RentBik.Model.Customer;
 import com.RentBikApp.RentBik.Model.ErrorResponse;
 import com.RentBikApp.RentBik.Model.Insurance;
 import com.RentBikApp.RentBik.Model.SuccessResponse;

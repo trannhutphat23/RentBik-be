@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface RentRepository extends JpaRepository<Rent, Integer> {
@@ -43,4 +44,20 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
                     "WHERE customer_id = %:id% AND rent_status = 'Dang thue'"
     )
     Integer getRentHasCustomerId(Integer id);
+
+    // get record which equal car_id and rent_status = 'Dang thue'
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(*) " +
+                    "FROM RENT " +
+                    "WHERE car_id = %:carId% AND rent_status = 'Dang thue'"
+    )
+    Integer getCarHasCarIdAndHiring(Integer carId);
+
+    // get list rent_id record which equal car_id
+    @Query(nativeQuery = true,
+            value = "SELECT id AS rent_id " +
+                    "FROM RENT " +
+                    "WHERE car_id = %:carId%"
+    )
+    List<Integer> getListRentIdByCarId(Integer carId);
 }

@@ -2,10 +2,12 @@ package com.RentBikApp.RentBik.Controller;
 
 import com.RentBikApp.RentBik.DTO.CarDto;
 import com.RentBikApp.RentBik.DTO.CarResponseDto;
+import com.RentBikApp.RentBik.DTO.CarUpdateDto;
 import com.RentBikApp.RentBik.DTO.InsuranceCarDto;
 import com.RentBikApp.RentBik.Service.CarService;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @CrossOrigin
@@ -68,10 +70,18 @@ public class CarController {
         return carService.addInsuranceForCar(dto.carId(), dto.insuranceId());
     }
 
-    @PutMapping("/cars/update")
+    @PutMapping("/cars/update/{car_id}")
     public Object updateCar(
-            @RequestBody CarDto dto
+            @RequestBody CarUpdateDto dto,
+            @PathVariable("car_id") Integer id
     ){
-        return carService.updateCar(dto);
+        return carService.updateCar(dto, id);
+    }
+
+    @DeleteMapping("/cars/delete/{car_id}")
+    public Object deleteCar(
+            @PathVariable("car_id") Integer id
+    ){
+        return carService.deleteCar(id);
     }
 }

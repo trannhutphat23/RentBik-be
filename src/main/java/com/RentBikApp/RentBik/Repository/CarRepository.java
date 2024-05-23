@@ -1,6 +1,5 @@
 package com.RentBikApp.RentBik.Repository;
 
-import com.RentBikApp.RentBik.DTO.ReportCarDto;
 import com.RentBikApp.RentBik.Model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
@@ -56,7 +56,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     Car findByBsx(String bsx);
 
     @Query(nativeQuery = true,
-            value = "SELECT t1.id, t1.license_plate, t4.mabh, t3.name as type_car, t2.name as series_car, t5.rent_count, t6.return_count, t6.tong " +
+            value = "SELECT t1.id, t1.license_plate, t4.mabh, t3.name as type_car, t2.name as series_car, " +
+                    "COALESCE(t5.rent_count, 0) AS rent_count, COALESCE(t6.return_count, 0) AS return_count, COALESCE(t6.tong, 0) AS tong " +
                     "FROM public.CAR t1 " +
                     "INNER JOIN public.SERIES t2 ON t1.series_id = t2.id " +
                     "INNER JOIN public.TYPE t3 ON t1.type_id = t3.id " +
@@ -93,4 +94,12 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "WHERE insurance_id = %:id% AND status = 'Co san'"
     )
     void updateCarHasInsuranceId(Integer id);
+
+    // get insurance_id by car_id
+    @Query(nativeQuery = true,
+            value = "SELECT insurance_id " +
+                    "FROM car " +
+                    "WHERE id = %:carId%"
+    )
+    Optional<Integer> getInsuranceIdByCarId(Integer carId);
 }

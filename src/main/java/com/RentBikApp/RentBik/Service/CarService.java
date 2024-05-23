@@ -2,6 +2,7 @@ package com.RentBikApp.RentBik.Service;
 
 import com.RentBikApp.RentBik.DTO.CarDto;
 import com.RentBikApp.RentBik.DTO.CarResponseDto;
+import com.RentBikApp.RentBik.DTO.CarUpdateDto;
 import com.RentBikApp.RentBik.Model.*;
 import com.RentBikApp.RentBik.Repository.*;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,21 @@ public class CarService {
     private final BrandRepository brandRepository;
     private final SeriesRepository seriesRepository;
     private final InsuranceRepository insuranceRepository;
+    private final RentRepository rentRepository;
+    private final MaintenanceRepository maintenanceRepository;
+    private final ReturnCardRepository returnCardRepository;
+    private final PaymentMaintenanceRepository paymentMaintenanceRepository;
 
-    public CarService(CarRepository carRepository, TypeRepository typeRepository, BrandRepository brandRepository, SeriesRepository seriesRepository, InsuranceRepository insuranceRepository) {
+    public CarService(CarRepository carRepository, TypeRepository typeRepository, BrandRepository brandRepository, SeriesRepository seriesRepository, InsuranceRepository insuranceRepository, RentRepository rentRepository, MaintenanceRepository maintenanceRepository, ReturnCardRepository returnCardRepository, PaymentMaintenanceRepository paymentMaintenanceRepository) {
         this.carRepository = carRepository;
         this.typeRepository = typeRepository;
         this.brandRepository = brandRepository;
         this.seriesRepository = seriesRepository;
         this.insuranceRepository = insuranceRepository;
+        this.rentRepository = rentRepository;
+        this.maintenanceRepository = maintenanceRepository;
+        this.returnCardRepository = returnCardRepository;
+        this.paymentMaintenanceRepository = paymentMaintenanceRepository;
     }
 
     public Object addCar(CarDto dto, Integer brandId, Integer typeId, Integer seriesId, Integer insuranceId){
@@ -133,9 +142,57 @@ public class CarService {
         return new SuccessResponse("Add insurance successfully");
     }
 
-    public Object updateCar(CarDto dto){
-        return dto;
-//        return carRepository.updateCar();
+    public Object updateCar(CarUpdateDto dto, Integer id){
+        Optional<Car> optionalCar = carRepository.findById(id);
+        if (optionalCar.isEmpty()){
+            return new ErrorResponse("Car doesn't exist");
+        }
+        // update
+        Car car = optionalCar.get();
+        car.setLicensePlate(dto.licensePlate());
+        car.setPurchaseDate(dto.purchaseDate());
+        car.setPurchasePrice(dto.purchasePrice());
+        car.setCarNote(dto.carNote());
+        // update hire price
+        Optional<Integer> optionalInsuranceId = carRepository.getInsuranceIdByCarId(id);
+        if (optionalInsuranceId.isPresent()){
+            car.setHirePrice(dto.purchasePrice()*15/100);
+        }else{
+            car.setHirePrice((dto.purchasePrice()*10/100));
+        }
+        //save
+        return carRepository.save(car);
+    }
+
+    public Object deleteCar(Integer id){
+        Optional<Car> optionalCar = carRepository.findById(id);
+        if (optionalCar.isEmpty()){
+            return new ErrorResponse("Car doesn't exist");
+        }
+
+        int count = rentRepository.getCarHasCarIdAndHiring(id);
+        if (count > 0){
+            return new ErrorResponse("This car is hiring");
+        }
+
+        int countMaintenance = maintenanceRepository.getMaintenanceByCarId(id);
+        if (countMaintenance > 0){
+            return new ErrorResponse("Have not already payment for this car");
+        }
+
+        List<Integer> rentIds = rentRepository.getListRentIdByCarId(id);
+        for (Integer rentId : rentIds){
+            returnCardRepository.deleteByRentId(rentId);
+            rentRepository.deleteById(rentId);
+        }
+        List<Integer> maintenanceIds = maintenanceRepository.getListRentIdByCarId(id);
+        for (Integer maintenanceId : maintenanceIds){
+            paymentMaintenanceRepository.deleteByMaintenanceId(maintenanceId);
+            maintenanceRepository.deleteById(maintenanceId);
+        }
+        carRepository.deleteById(id);
+
+        return new SuccessResponse("Delete successfully");
     }
 
     private CarResponseDto toCarResponseDto(Car car){
