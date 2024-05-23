@@ -30,6 +30,13 @@ public class CarController {
         return carService.findAllCar();
     }
 
+    @GetMapping("/cars/{car_id}")
+    public Object findCarById(
+            @PathVariable("car_id") Integer id
+    ){
+        return carService.findCarById(id);
+    }
+
     @GetMapping("/cars/search")
     public List<CarResponseDto> searchCars(
             @RequestParam String keyword
@@ -59,5 +66,12 @@ public class CarController {
             @RequestBody InsuranceCarDto dto
     ){
         return carService.addInsuranceForCar(dto.carId(), dto.insuranceId());
+    }
+
+    @PutMapping("/cars/update")
+    public Object updateCar(
+            @RequestBody CarDto dto
+    ){
+        return carService.updateCar(dto);
     }
 }

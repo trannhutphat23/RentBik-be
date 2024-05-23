@@ -79,8 +79,10 @@ public class InsuranceService {
 
         int count = carRepository.getCarHasInsuranceId(id);
         if (count > 0){
-            return new ErrorResponse("This insurance is belongs to car");
+            return new ErrorResponse("This insurance is belongs to hiring car");
         }
+
+        carRepository.updateCarHasInsuranceId(id);
 
         insuranceRepository.deleteById(id);
 

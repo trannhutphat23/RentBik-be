@@ -80,7 +80,17 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query(nativeQuery = true,
             value = "SELECT COUNT(*) " +
                     "FROM CAR " +
-                    "WHERE insurance_id = %:id%"
+                    "WHERE insurance_id = %:id% AND status = 'Khong co san'"
     )
     Integer getCarHasInsuranceId(Integer id);
+
+    // update car which match insurance_id
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true,
+            value = "UPDATE CAR " +
+                    "SET insurance_id = NULL " +
+                    "WHERE insurance_id = %:id% AND status = 'Co san'"
+    )
+    void updateCarHasInsuranceId(Integer id);
 }

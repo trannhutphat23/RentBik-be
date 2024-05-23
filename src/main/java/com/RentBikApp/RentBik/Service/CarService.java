@@ -42,7 +42,10 @@ public class CarService {
             if (optionalInsurance.isPresent()){
                 Insurance insurance = optionalInsurance.get();
                 car.setInsurance(insurance);
+                car.setHirePrice(dto.purchasePrice()*15/100);
             }
+        }else{
+            car.setHirePrice(dto.purchasePrice()*10/100);
         }
 
         if (optionalType.isPresent() && optionalBrand.isPresent() && optionalSeries.isPresent()){
@@ -54,8 +57,6 @@ public class CarService {
             car.setBrand(brand);
             car.setSeries(series);
         }
-
-        car.setHirePrice(dto.purchasePrice()*10/100);
 
         return carRepository.save(car);
     }
@@ -75,6 +76,15 @@ public class CarService {
         return cars.stream()
                 .map(this::toCarResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    public Object findCarById(Integer id){
+        Optional<Car> optionalCar = carRepository.findById(id);
+        if (optionalCar.isEmpty()){
+            return new ErrorResponse("Car doesn't exist");
+        }
+
+        return optionalCar.get();
     }
 
     public List<CarResponseDto> searchCars(String keyword){
@@ -121,6 +131,11 @@ public class CarService {
         carRepository.addNewInsurance(carId, insuranceId);
 
         return new SuccessResponse("Add insurance successfully");
+    }
+
+    public Object updateCar(CarDto dto){
+        return dto;
+//        return carRepository.updateCar();
     }
 
     private CarResponseDto toCarResponseDto(Car car){
