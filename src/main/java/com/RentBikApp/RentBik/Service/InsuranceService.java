@@ -83,7 +83,7 @@ public class InsuranceService {
 
         carRepository.updateCarHasInsuranceId(id);
 
-        insuranceRepository.deleteById(id);
+        insuranceRepository.deleteInsuranceById(id);
 
         return new SuccessResponse("Delete successfully");
     }

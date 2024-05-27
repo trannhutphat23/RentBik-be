@@ -29,7 +29,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                     "FROM public.car t1 " +
                     "INNER JOIN public.series t2 ON t1.series_id = t2.id " +
                     "INNER JOIN public.type t3 ON t1.type_id = t3.id " +
-                    "WHERE t1.status = 'Co san' AND (license_plate ILIKE %:keyword% OR t2.name ILIKE %:keyword% OR t3.name ILIKE %:keyword%)")
+                    "WHERE t1.status = 'Co san' AND (license_plate ILIKE %:keyword% OR t2.name ILIKE %:keyword% OR t3.name ILIKE %:keyword%) " +
+                    "ORDER BY t1.id ASC")
     List<Car> searchCarsAvailable(String keyword);
 
     @Query(nativeQuery = true,
@@ -40,7 +41,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query(nativeQuery = true,
             value = "SELECT * " +
                     "FROM public.CAR " +
-                    "WHERE status = 'Co san' ")
+                    "WHERE status = 'Co san' " +
+                    "ORDER BY id ASC")
     List<Car> findCarAvailable();
     @Modifying
     @Transactional
