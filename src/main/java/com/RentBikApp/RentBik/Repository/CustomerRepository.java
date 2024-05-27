@@ -30,7 +30,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
                 "OR t1.note ILIKE %:keyword% " +
                 "OR t1.phone_number ILIKE %:keyword% " +
                 "OR t3.rank ILIKE %:keyword% " +
-                "ORDER BY t1.id"
+                "ORDER BY t1.id ASC"
     )
     List<Customer> findByKeywordContainingIgnoreCase(String keyword);
 
@@ -62,7 +62,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Object[]> getReportCustomer();
 
     @Query(nativeQuery = true,
-        value = "SELECT id, cccd FROM CUSTOMER"
+        value = "SELECT id, cccd FROM CUSTOMER " +
+                "ORDER BY id ASC"
     )
     List<Object[]> getCccds();
 
