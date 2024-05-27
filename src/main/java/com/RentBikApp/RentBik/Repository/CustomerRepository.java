@@ -25,11 +25,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
         value = "SELECT t1.*, t3.rank FROM public.customer t1 " +
                 "INNER JOIN customer_gplx t2 ON t1.id = t2.customer_id " +
                 "INNER JOIN gplx t3 ON t2.gplx_id = t3.id " +
-                "WHERE t1.cccd LIKE %:keyword% " +
-                "OR t1.fullname LIKE %:keyword% " +
-                "OR t1.note LIKE %:keyword% " +
-                "OR t1.phone_number LIKE %:keyword% " +
-                "OR t3.rank ILIKE %:keyword%"
+                "WHERE t1.cccd ILIKE %:keyword% " +
+                "OR t1.fullname ILIKE %:keyword% " +
+                "OR t1.note ILIKE %:keyword% " +
+                "OR t1.phone_number ILIKE %:keyword% " +
+                "OR t3.rank ILIKE %:keyword% " +
+                "ORDER BY t1.id"
     )
     List<Customer> findByKeywordContainingIgnoreCase(String keyword);
 
